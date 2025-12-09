@@ -1,4 +1,4 @@
-from flask import request, send_from_directory, render_template
+from flask import request, send_from_directory, render_template, redirect, url_for
 import os
 import uuid
 from functions.deleter import deletefile
@@ -27,3 +27,7 @@ def register_routes(app):
     @app.route('/<filename>', methods=['GET'])
     def serve_image(filename):
         return send_from_directory(folder, filename)
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return redirect(url_for('index'))
